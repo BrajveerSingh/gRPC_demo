@@ -20,9 +20,21 @@ message AllAccountResponse {
   repeated AccountBalance account_balance = 1;
 }
 
+message WithdrawRequest {
+  int32 account_number = 1;
+  int32 amount = 2;
+}
+
+message WithdrawnAmount {
+  int32 amount = 1;
+}
+
 service BankService {
   //Unary
   rpc GetAccountBalance(BalanceCheckRequest) returns (AccountBalance);
   //Unary
   rpc GetAllAccounts(google.protobuf.Empty) returns (AllAccountResponse);
+
+  //server streaming
+  rpc Withdraw(WithdrawRequest) returns (stream WithdrawnAmount);
 }
