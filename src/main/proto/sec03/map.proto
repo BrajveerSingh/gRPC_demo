@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package sec03;
+
+option java_multiple_files = true;
+option java_package = "org.example.models.sec03";
+
+message Car {
+  string make = 1;
+  string model = 2;
+  int32 year = 3;
+}
+
+message Dealer {
+  map<int32, Car> carByYear = 1;
+  map<string, Car> carByModel = 2;
+}

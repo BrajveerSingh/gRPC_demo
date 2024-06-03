@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package sec03;
+
+option java_multiple_files = true;
+option java_package = "org.example.models.sec03";
+
+message EmailCredentials {
+  string address = 1;
+  string password = 2;
+}
+
+message PhoneCredentials {
+  int32 number = 1;
+  int32 code = 2;
+}
+
+message Credentials {
+  //oneof means either EmailCredentials or PhoneCredentials, both together cannot exists
+  oneof login_credentials {
+    EmailCredentials emailCredentials = 1;
+    PhoneCredentials phoneCredentials = 2;
+  }
+}

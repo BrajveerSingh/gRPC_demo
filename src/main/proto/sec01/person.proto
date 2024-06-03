@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package sec01;
+
+option java_package = "org.example.models.sec01";  // To create generated class under a package
+
+message Person {
+  string name = 1;  //Here 1 and 2 field numbers and they are not values assigned to variables
+  int32 age = 2;
+}
