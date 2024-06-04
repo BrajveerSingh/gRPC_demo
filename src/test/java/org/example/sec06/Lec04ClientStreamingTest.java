@@ -5,8 +5,6 @@ import org.example.common.ResponseObserver;
 import org.example.models.sec06.AccountBalance;
 import org.example.models.sec06.DepositAmount;
 import org.example.models.sec06.DepositRequest;
-import org.example.models.sec06.WithdrawRequest;
-import org.example.models.sec06.WithdrawnAmount;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +22,7 @@ public class Lec04ClientStreamingTest extends AbstractTest {
     @Test
     public void deposit() {
         var responseObserver = ResponseObserver.<AccountBalance>create();
-        var requestObserver = this.asyncStub.deposit(responseObserver);
+        var requestObserver = this.bankServiceStub.deposit(responseObserver);
         requestObserver.onNext(DepositRequest.newBuilder().setAccountNumber(5).build());
         IntStream.rangeClosed(1, 10)
                 .mapToObj(i -> DepositAmount.newBuilder().setAmount(10).build())
@@ -44,7 +42,7 @@ public class Lec04ClientStreamingTest extends AbstractTest {
     @Test
     public void depositRequestCancellation() {
         var responseObserver = ResponseObserver.<AccountBalance>create();
-        var requestObserver = this.asyncStub.deposit(responseObserver);
+        var requestObserver = this.bankServiceStub.deposit(responseObserver);
         requestObserver.onNext(DepositRequest.newBuilder().setAccountNumber(5).build());
         Uninterruptibles.sleepUninterruptibly(1, TimeUnit.SECONDS);
         requestObserver.onError(new RuntimeException());

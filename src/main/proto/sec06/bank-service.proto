@@ -40,6 +40,23 @@ message DepositRequest {
   }
 }
 
+message TransferRequest {
+  int32 from_account = 1;
+  int32 to_Account = 2;
+  int32 amount = 3;
+}
+
+enum TransferStatus {
+  REJECTED = 0;
+  COMPLETED = 1;
+}
+
+message TransferResponse {
+  TransferStatus status = 1;
+  AccountBalance from_account = 2;
+  AccountBalance to_Account = 3;
+}
+
 service BankService {
   //Unary
   rpc GetAccountBalance(BalanceCheckRequest) returns (AccountBalance);
@@ -51,4 +68,9 @@ service BankService {
 
   //client streaming
   rpc Deposit(stream DepositRequest) returns (AccountBalance);
+}
+
+service TransferService {
+  //bidirectional stream
+  rpc Transfer(stream TransferRequest) returns (stream TransferResponse);
 }

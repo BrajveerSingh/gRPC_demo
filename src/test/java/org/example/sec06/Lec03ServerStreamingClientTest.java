@@ -1,7 +1,6 @@
 package org.example.sec06;
 
 import org.example.common.ResponseObserver;
-import org.example.models.sec06.AccountBalance;
 import org.example.models.sec06.WithdrawRequest;
 import org.example.models.sec06.WithdrawnAmount;
 import org.junit.jupiter.api.Test;
@@ -38,7 +37,7 @@ public class Lec03ServerStreamingClientTest extends AbstractTest {
                 .setAmount(50)
                 .build();
         var observer = ResponseObserver.<WithdrawnAmount>create();
-        this.asyncStub.withdraw(request, observer);
+        this.bankServiceStub.withdraw(request, observer);
         observer.await();
         assertEquals(5, observer.getResponses().size());
         assertEquals(10, observer.getResponses().get(0).getAmount());
