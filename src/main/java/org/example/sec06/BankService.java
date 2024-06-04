@@ -7,9 +7,11 @@ import org.example.models.sec06.AccountBalance;
 import org.example.models.sec06.AllAccountResponse;
 import org.example.models.sec06.BalanceCheckRequest;
 import org.example.models.sec06.BankServiceGrpc;
+import org.example.models.sec06.DepositRequest;
 import org.example.models.sec06.WithdrawRequest;
 import org.example.models.sec06.WithdrawnAmount;
 import org.example.sec06.repository.AccountRepository;
+import org.example.sec06.requesthandlers.DepositRequestHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,5 +62,10 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
         }
 
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public StreamObserver<DepositRequest> deposit(final StreamObserver<AccountBalance> responseObserver) {
+        return new DepositRequestHandler(responseObserver);
     }
 }

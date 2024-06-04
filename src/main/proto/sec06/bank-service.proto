@@ -29,6 +29,17 @@ message WithdrawnAmount {
   int32 amount = 1;
 }
 
+message DepositAmount {
+  int32 amount = 1;
+}
+
+message DepositRequest {
+  oneof request {
+    int32 account_number = 1;
+    DepositAmount deposit_amount = 2;
+  }
+}
+
 service BankService {
   //Unary
   rpc GetAccountBalance(BalanceCheckRequest) returns (AccountBalance);
@@ -37,4 +48,7 @@ service BankService {
 
   //server streaming
   rpc Withdraw(WithdrawRequest) returns (stream WithdrawnAmount);
+
+  //client streaming
+  rpc Deposit(stream DepositRequest) returns (AccountBalance);
 }
